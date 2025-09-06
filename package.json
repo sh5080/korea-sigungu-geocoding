@@ -1,0 +1,39 @@
+{
+  "name": "korea-sigungu-geocoding",
+  "version": "1.2.1",
+  "description": "대한민국 시군구 역지오코딩을 위한 npm 패키지 (시도 정보 포함)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "korea",
+    "geocoding",
+    "reverse-geocoding",
+    "sigungu",
+    "administrative-division",
+    "gis",
+    "geojson"
+  ],
+  "author": "sh5080",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "ts-jest": "^29.0.0"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
