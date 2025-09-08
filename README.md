@@ -1,12 +1,13 @@
 # Korea Sigungu Geocoding
 
-대한민국 시군구 역지오코딩을 위한 npm 패키지입니다.
+대한민국 시군구 지리정보 처리를 위한 npm 패키지입니다.
 
 ## 특징
 
 - 🗺️ 대한민국 전체 시군구 행정구역 데이터 포함
-- 📍 좌표로부터 시군구 정보 조회
+- 📍 좌표로부터 시군구 정보 조회 (역지오코딩)
 - 🔍 시군구 코드/이름으로 검색
+- 📏 두 좌표 간 거리 계산 (하버사인 공식)
 - 🌐 브라우저 및 Node.js 환경 모두 지원
 - ⚡ 빠른 검색 성능
 - 🎯 TypeScript 지원
@@ -24,7 +25,7 @@ npm install korea-sigungu-geocoding
 ```typescript
 import { geocoding } from 'korea-sigungu-geocoding';
 
-// 좌표로 시군구 찾기
+// 좌표로 시군구 찾기 (역지오코딩)
 const result = geocoding.geocode(127.0276, 37.4979); // 서울시 중구
 console.log(result);
 // {
@@ -36,6 +37,10 @@ console.log(result);
 //   },
 //   point: { longitude: 127.0276, latitude: 37.4979 }
 // }
+
+// 두 좌표 간 거리 계산
+const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'km');
+console.log(distance); // 약 325km
 ```
 
 ### 브라우저 환경
@@ -44,8 +49,13 @@ console.log(result);
 <script type="module">
   import { geocoding } from 'https://unpkg.com/korea-sigungu-geocoding@latest/dist/index.js';
   
+  // 역지오코딩
   const result = geocoding.geocode(127.0276, 37.4979);
   console.log(result);
+  
+  // 거리 계산
+  const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'km');
+  console.log(distance); // 약 325km
 </script>
 ```
 
@@ -61,7 +71,17 @@ function LocationComponent() {
     console.log(result);
   };
   
-  return <button onClick={handleGeocode}>위치 찾기</button>;
+  const handleDistance = () => {
+    const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'km');
+    console.log(`거리: ${distance}km`);
+  };
+  
+  return (
+    <div>
+      <button onClick={handleGeocode}>위치 찾기</button>
+      <button onClick={handleDistance}>거리 계산</button>
+    </div>
+  );
 }
 ```
 
@@ -108,6 +128,28 @@ console.log(sigungu);
 ```typescript
 const allSigungu = geocoding.getAllSigungu();
 console.log(`총 ${allSigungu.length}개의 시군구가 있습니다.`);
+```
+
+#### `calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number, unit?: 'km' | 'm' | 'mile'): number`
+
+두 좌표 간의 거리를 계산합니다 (하버사인 공식 사용).
+
+```typescript
+// 서울시청에서 부산시청까지 거리
+const distance = geocoding.calculateDistance(
+  37.5665, 126.9780,  // 서울시청
+  35.1796, 129.0756,  // 부산시청
+  'km'                // 단위 (기본값: 'km')
+);
+console.log(distance); // 약 325km
+
+// 미터 단위로 계산
+const distanceInMeters = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'm');
+console.log(distanceInMeters); // 약 325000m
+
+// 마일 단위로 계산
+const distanceInMiles = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'mile');
+console.log(distanceInMiles); // 약 202마일
 ```
 
 ## 데이터 구조

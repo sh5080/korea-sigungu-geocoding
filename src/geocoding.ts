@@ -143,4 +143,50 @@ export class KoreaSigunguGeocoding {
     );
   }
 
+  /**
+   * 두 좌표 간의 거리를 계산합니다 (하버사인 공식 사용).
+   * @param lat1 첫 번째 점의 위도
+   * @param lon1 첫 번째 점의 경도
+   * @param lat2 두 번째 점의 위도
+   * @param lon2 두 번째 점의 경도
+   * @param unit 거리 단위 ('km' | 'm' | 'mile')
+   * @returns 거리 (단위에 따라 km, m, mile)
+   */
+  public calculateDistance(
+    lat1: number, 
+    lon1: number, 
+    lat2: number, 
+    lon2: number, 
+    unit: 'km' | 'm' | 'mile' = 'km'
+  ): number {
+    const R = 6371; // 지구 반지름 (km)
+    const dLat = this.toRadians(lat2 - lat1);
+    const dLon = this.toRadians(lon2 - lon1);
+    
+    const a = 
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // km 단위
+
+    switch (unit) {
+      case 'm':
+        return Math.round(distance * 1000);
+      case 'mile':
+        return Math.round(distance * 0.621371 * 100) / 100;
+      case 'km':
+      default:
+        return Math.round(distance * 100) / 100;
+    }
+  }
+
+  /**
+   * 각도를 라디안으로 변환합니다.
+   */
+  private toRadians(degrees: number): number {
+    return degrees * (Math.PI / 180);
+  }
+
 }

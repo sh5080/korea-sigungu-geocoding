@@ -82,4 +82,32 @@ describe('KoreaSigunguGeocoding', () => {
     });
   });
 
+  describe('calculateDistance', () => {
+    test('서울에서 부산까지 거리 계산 (km)', () => {
+      // 서울시청 (37.5665, 126.9780)에서 부산시청 (35.1796, 129.0756)까지
+      const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'km');
+      expect(distance).toBeCloseTo(325, 0); // 약 325km
+    });
+
+    test('서울에서 부산까지 거리 계산 (m)', () => {
+      const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'm');
+      expect(distance).toBeCloseTo(325000, -3); // 약 325,000m
+    });
+
+    test('서울에서 부산까지 거리 계산 (mile)', () => {
+      const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756, 'mile');
+      expect(distance).toBeCloseTo(202, 0); // 약 202마일
+    });
+
+    test('같은 좌표 간 거리는 0', () => {
+      const distance = geocoding.calculateDistance(37.5665, 126.9780, 37.5665, 126.9780);
+      expect(distance).toBe(0);
+    });
+
+    test('기본 단위는 km', () => {
+      const distance = geocoding.calculateDistance(37.5665, 126.9780, 35.1796, 129.0756);
+      expect(distance).toBeCloseTo(325, 0);
+    });
+  });
+
 });
