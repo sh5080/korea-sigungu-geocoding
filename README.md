@@ -185,4 +185,8 @@ MIT
 
 ## 기여하기
 
-버그 리포트나 기능 제안은 GitHub Issues를 이용해 주세요.
+버그 리포트나 기능 제안은 [GitHub Issues](https://github.com/sh5080/korea-sigungu-geocoding/issues)를 이용해 주세요.
+
+- 🐛 **버그 리포트**: [Issues](https://github.com/sh5080/korea-sigungu-geocoding/issues)에서 "Bug report" 라벨로 등록
+- 💡 **기능 제안**: [Issues](https://github.com/sh5080/korea-sigungu-geocoding/issues)에서 "Feature request" 라벨로 등록
+- 🔧 **기여**: Pull Request를 환영합니다!
